@@ -16,8 +16,12 @@ var __pointstore = {},
     __QUAD ,
 
     Direction = window.Direction,
+
     STOPCOLOR = Direction.stopColor,
     STARTCOLOR = Direction.startColor,
+
+    QUADOBJECTS = Direction.quadObjects,
+    QUADLEVELS = Direction.quadLevels,
 
     AIMCOLOR = Direction.aimColor,
     SELFCOLOR = Direction.selfColor,
@@ -48,13 +52,18 @@ function game_setup(){
     __gamebutton.div.addEventListener("mousedown",E_game_control,false);
 
     //调整canvas大小
-    __canvas.style.height =HEIGHTRATE;
-    __canvas.style.width = WIDTHRATE;
+    __canvas.__height = HEIGHTRATE*window.screen.height;
+    __canvas.__width = WIDTHRATE*window.screen.width;
+    __canvas.style.height =__canvas.__height+'px';
+    __canvas.style.width = __canvas.__width+'px';
 
     //设置绘图环境
     __context = __canvas.getContext("2d");
 
-    __QUAD = new window.QUAD();
+    __QUAD = new window.QUAD(
+            {x:0,y:0,width:__canvas.__width,height:__canvas.__height},
+            QUADOBJECTS,
+            QUADLEVELS);
 
 
     //init button
@@ -72,13 +81,14 @@ function game_setup(){
  */
 function game_engine(){
 
-    __context.clearRect(0,0,__canvas.offsetWidth,__canvas.offsetHeight);
-    __QUAD.clear();
 
     var i =0;
 
     //close engine while not isGamePlay.
     if(!__isGamePlay) return;
+
+    __context.clearRect(0,0,9999,9999);
+    __QUAD.clear();
 
     //run npc point and draw npc point
     for(i=0;i<__pointstore.npc.length;i++){
@@ -86,8 +96,14 @@ function game_engine(){
         __pointstore.npc[i].run().draw();
     }
 
-    for(i=0;i<__pointstore.protect.length;i++)
+    //draw protect point
+    for(i=0;i<__pointstore.protect.length;i++){
+    
         __QUAD.insert(__pointstore.protect[i]);
+        __pointstore.protect[i].draw();
+    }
+    
+    console.log("game_engine")
 
 
     //run and draw self point
@@ -127,7 +143,7 @@ function game_engine(){
         }
     }
 
-
+/*
     i=0
     while(i < __pointstore.npc.length){                                         //只需要判断会移动得球(npc)
     
@@ -155,7 +171,7 @@ function game_engine(){
         __pointstore.npc[i].hasJudge=true;
     }
 
-
+*/
     setTimeout(game_engine,50);
 
 
@@ -179,40 +195,21 @@ function game_fail(){
  */
 function game_reborn(){
 
-    var height = __canvas.offsetHeight,
-        width = __canvas.offsetWidth;
+    var height = __canvas.__height,
+        width = __canvas.__width,
+        x,y,size;
 
     //产生新的npc点
     function new_npc_points(){
 
         //clear all firstly
-        __pointstore.npc = []
+        __pointstore.npc = [];
 
-        for(var i=0;i<NPCNUMBER;i++){
+        for(var i=0;i<NPCNUMBER ; i++){
 
-        
-            var x = Math.random()*width,
-                y = Math.random()*height,
-                size = Math.random()*(NPCMAXSIZE-NPCMINSIZE)+NPCMINSIZE,
-                isThisPoint = true;
-
-
-            //judge point until find a suitable point
-            while(true){
-            
-                //judge whether need this point
-                if( x-size <= 0 || x+size >= width ||
-                    y-size <= 0 || y + size >= height )
-                    isThisPoint = false;
-
-                //find out
-                if(isThisPoint) break;
-
-                x = Math.random()*width;
-                y = Math.random()*height;
-                size = Math.random()*(NPCMAXSIZE-NPCMINSIZE)+NPCMINSIZE;
-            }
-
+            size = Math.random()*(NPCMAXSIZE-NPCMINSIZE)+NPCMINSIZE,
+            x = Math.random()*( width - 2*size)+size,
+            y = Math.random()*( height - 2*size)+size;
 
             __pointstore.npc.push(new Point(
                         
@@ -221,11 +218,13 @@ function game_reborn(){
                         y,
                         SPEED,
                         Math.random()*2*Math.PI-Math.PI,
-                        size
+                        size,NPCCOLOR[Math.floor(Math.random()*NPCCOLOR.length)]              //得到随机颜色
 
                         ));
-            
+        
         }
+            
+        console.log("npcOver");
     }
 
 
@@ -235,28 +234,12 @@ function game_reborn(){
         //clear all firstly
         __pointstore.protect = []
 
-        for(var i=0;i<NPCNUMBER;i++){
-        
-            var x = Math.random()*width,
-                y = Math.random()*height,
-                size = PROTECTSIZE,
-                isThisPoint = true;
+        for(var i=0;i<PROTECTNUM;i++){
 
+            size = PROTECTSIZE,
+            x = Math.random()*( width - 2*size)+size,
+            y = Math.random()*( height - 2*size)+size;
 
-            //judge point until find a suitable point
-            while(true){
-            
-                //judge whether need this point
-                if( x-size <= 0 || x+size >= width ||
-                    y-size <= 0 || y + size >= height )
-                    isThisPoint = false;
-
-                //find out
-                if(isThisPoint) break;
-
-                x = Math.random()*width;
-                y = Math.random()*height;
-            }
 
             __pointstore.protect.push(new Point(
                         
@@ -265,11 +248,14 @@ function game_reborn(){
                         y,
                         0,
                         0,
-                        size
+                        size,PROTECTCOLOR
 
                         ));
 
         }
+
+       
+        console.log("protectOver");
     }
 
 
@@ -284,7 +270,7 @@ function game_reborn(){
                 height - AIMSIZE,
                 0,
                 0,
-                AIMSIZE
+                AIMSIZE,AIMCOLOR
 
                 );
     }
@@ -300,7 +286,7 @@ function game_reborn(){
                 PROTECTSIZE,
                 0,
                 0,
-                SELFSIZE
+                SELFSIZE,SELFCOLOR
                 
                 )
     }
@@ -309,10 +295,10 @@ function game_reborn(){
     console.log("game_reborn");
 
     //设置好点
+    get_self_points();
+    set_aim_points();
     set_protect_points();
     new_npc_points();
-    set_aim_points();
-    get_self_points();
     __isDead = false;
     console.log("game_reborn_over");
 
@@ -377,11 +363,8 @@ function E_game_control(){
 
     //当被设为开启状态时，除了换颜色，还需要重启引擎
     if(__isGamePlay){
-        console.log("start");
         change_start_to_stop();
-        console.log("change_stop_to_start");
         add_key_down();
-        console.log("add_key_down");
         fresh_date();
         console.log("fresh_date");
         game_engine();
@@ -419,15 +402,16 @@ function E_game_keyup(e){
 
 /** Points
  */
-function Point(id,x,y,v,a,size){
+function Point(id,x,y,v,a,size,color){
 
-    this.size;
-    this.x;
-    this.y;
-    this.v;
-    this.a;                                             //-PI ~ PI,the direction of this Point
+    this.size = size;
+    this.x = x;
+    this.y = y;
+    this.v = v;
+    this.a = a;                                             //-PI ~ PI,the direction of this Point
+    this.color = color;
 
-    this.id;                                            //the level of the this Point
+    this.id = id;                                            //the level of the this Point
     this.timeStamp = new Date();
     this.hasJudge = false;                              //set it to true while has judge
 
@@ -440,7 +424,7 @@ Point.prototype.change = function(){
 
     this.a = this.a < 0 
                     ? -( Math.PI + this.a )
-                    : ( Maht.PI - this.a);
+                    : ( Math.PI - this.a);
 }
 
 
@@ -452,12 +436,20 @@ Point.prototype.run = function(){
 
     //碰到墙壁后根据相应得代码改变this
     if(this.x-this.size < 0 || 
-            this.x+this.size > __canvas.offsetWidth)
+            this.x+this.size > __canvas.__width){
         this.change();
+        this.x += this.v*(date - this.timeStamp)*Math.cos(this.a);
+        this.y += this.v*(date - this.timeStamp)*Math.sin(this.a);
+    }
 
     if(this.y-this.size < 0 || 
-            this.y+this.size > __canvas.offsetHeight)
+            this.y+this.size > __canvas.__height){
+
         this.a = -this.a;
+        this.x += this.v*(date - this.timeStamp)*Math.cos(this.a);
+        this.y += this.v*(date - this.timeStamp)*Math.sin(this.a);
+    
+    }
 
     this.x += this.v*(date - this.timeStamp)*Math.cos(this.a);
     this.y += this.v*(date - this.timeStamp)*Math.sin(this.a);
@@ -481,60 +473,68 @@ Point.prototype.timeFresh = function(){
 
 //画点
 Point.prototype.draw =function(){
+    console.log("drawStart");
+
+    var self = this;
 
     //draw Point by its id
     switch(this.id){
     
         //画自己
-        case 0: drawEasePoints(SELFCOLOR);
-                break;
+        case 0: 
+                
 
         //画终点
-        case 1: drawEasePoints(AIMCOLOR);
+        case 1:
+                
+
+        //画保护点·
+        case 3: drawEasePoints();
                 break;
 
         //画npc
         case 2: drawEvil();
                 break;
-
-        //画保护点·
-        case 3: drawEasePoints(PROTECTCOLOR);
-                break;
     }
 
 
     //draw PROTECT and aimPoint and selfPoint
-    function drawEasePoints(color){
+    function drawEasePoints(){
+        console.log("drawEasePointsStart")
     
         __context.save();
-        __context.translate(this.x,this.y);
+        __context.translate(self.x,self.y);
 
         __context.beginPath();
-        __context.arc(0,0,this.size,0,Math.PI*2,true);
-        __context.fillStyle = color;
+        __context.arc(0,0,self.size,0,Math.PI*2,true);
+        __context.fillStyle = self.color;
         __context.fill();
 
-        __context.restore
+        __context.restore();
+        console.log(self.size)
+
     }
 
 
     //draw evil points ,NPC
     function drawEvil(){
+        console.log("drawEvilStart")
     
 
-        var s = this.size;
+        var s = self.size;
 
         __context.save();
-        __context.translate(this.x,this.y);
+        __context.translate(self.x,self.y);
 
-        __context.beginPath();
-        __context.arc(0,0,this.size/4,0,Math.PI*2,true);
+        __context.beginPath();                                                              //画核心
+        __context.arc(0,0,self.size/4,0,Math.PI*2,true);
         __context.closePath();
-        __context.fillStyle =NPCCOLOR; 
+        __context.fillStyle =self.color; 
         __context.fill();
 
-        __context.beginPath();
-        __context.strokeStyle = NPCCOLOR;
+        __context.beginPath();                                                              //画边
+        __context.strokeStyle = self.color;
+        console.log(__context.strokeStyle);
 
         var dx = Math.sin(0);
         var dy = Math.cos(0);
@@ -552,6 +552,8 @@ Point.prototype.draw =function(){
         __context.stroke();
 
         __context.restore();
+
+        console.log("drawEvilOver");
 
     }
 }
