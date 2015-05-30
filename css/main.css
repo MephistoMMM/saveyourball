@@ -23,21 +23,58 @@ body{
 
 
 
+/*--------------------------------header---------------------------------*/
+
 .header{
-    background: url(../img/wall_87.jpg);
+    background: black;
+    background-size: cover;
 
 }
 
 
 .plane{
     display: -webkit-box;
+    align:center;
     -webkit-box-orient: vertical;
-    -webkit-box-pack: end;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
     height: 100%;
-    width: 10000px ;
+    width: 100%;
     background: url(../img/dbgrid.png);
 
 }
+
+#headerline {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align : center;
+    font-size: 8em;
+}
+
+
+#headerline > #main{
+
+    color: gold;
+    margin: 0 auto;
+    padding: 0;
+
+}
+
+#headerline > #aside{
+    color: #FFFF99;
+    font-size: 0.2em;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+.plane >canvas{
+    width :500px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
 
 
 #goTo{
@@ -45,11 +82,12 @@ body{
     left : -100px;
     background: black;
     box-shadow: 0 0 3em gold,inset 0 0 2em gold;
-    width: 100%;
+    width: 100000px;
     height: 180px;
-    opacity: 0;
+    opacity: 0.1;
 
     font-family: monospace, serif; font-size: 3em;color: white;
+    -webkit-transition: all 0.6s ease;
 }
 
 #goTo > p{
@@ -60,3 +98,85 @@ body{
 #goTo:hover{
     opacity: 0.5;
 }
+
+
+
+/*---------------------------------------------------------introduction----------------------------------------*/
+
+
+.introduction{
+
+}
+
+.items{
+    display: -webkit-box;
+    align:center;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    height: 100%;
+    width: 100%;
+    background: url(../img/dbgrid.png);
+
+}
+
+
+.items > div{
+    width:20%;
+    height:70%;
+    background: white;
+    margin: 100px;
+    border:medium groove gold;
+    border-radius: 2em;
+}
+
+
+
+
+/*---------------------------------------------------------game----------------------------------------*/
+
+
+.game{
+
+    width:100%;
+    height:100%;
+    background: black;
+}
+
+
+.gamePlant{
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: center;
+
+}
+
+
+/*---------------------------------------------------------floor----------------------------------------*/
+
+
+.tail{
+    display: -webkit-box;
+    align:center;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+#oneMoreSay{
+
+    width:100%;
+    height: 60%;
+
+}
+
+
+
+#foot{
+    width:100%;
+    height: 40%;
+    background:black;
+}
+

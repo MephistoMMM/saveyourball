@@ -9,6 +9,8 @@
 
 var Direction = window.Direction,
     TOPMARGIN = Direction.topMargin,
+    HEADERCANVASWIDTH = Direction.headerCanvasWidth,
+    HEADERCANVASHEIGHT = Direction.headerCanvasHeight;
     SECTION = Direction.section,
     ANIMATIONTIME = Direction.animationtime;
 
@@ -35,10 +37,8 @@ DealScroll.prototype.init= function(){
 
 
     //如果没有元素，则直接获取
-    if(this.divs === undefined){
-        this.divs = document.body.querySelectorAll('.screen');
-        this.buttun = document.body.querySelector('#goTo');
-    }
+    this.divs = document.body.querySelectorAll('.screen');
+    this.buttun = document.body.querySelector('#goTo');
 
     //给div设置高
     for(var i=0;i<this.divs.length;i++){
@@ -46,16 +46,33 @@ DealScroll.prototype.init= function(){
         this.divs[i].style.margin = this.space+' 0';
     }
 
+
     //给按钮做动画
     this.buttun.querySelector('p').style.left = document.body.offsetWidth /2 +'px';
-    this.buttun.addEventListener("mousedown",this.__scrollDown(),false);
+    this.buttun.addEventListener("mousedown",this.__mouseDown(),false);
+
+
+
+
+    //modify body;
+    document.body.style.height= 4* DealScroll.offsetHeight +'px';
+
+
+    
+
+
 
 }
 
 
 
+
+
+
+
+
 //goTo按钮点击函数
-DealScroll.prototype.__scrollDown = function(){
+DealScroll.prototype.__mouseDown = function(){
 
     var self = this;
 
@@ -97,6 +114,7 @@ function __sd(nstation,ntime,mstation){
 
 
 }
+
 
 
 

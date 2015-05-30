@@ -4,24 +4,66 @@
   <meta charset="UTF-8">
   <link  rel="stylesheet" href="css/main.css">
   <script type="application/javascript" src="js/Direction.js"></script>
+  <script type="application/javascript" src="js/quadtree_circle.js"></script>
   <script type="application/javascript" src="js/scroll.js"></script>
   <script type="application/javascript" src="js/game.js"></script>
   <script type="application/javascript" src="js/start.js"></script>
-  <title>SameYourBall</title>
+  <title>SaveYourBall</title>
 </head>
 <body id ="plane">
 
     <div class="screen header">
         <div class="plane">
+            <div id="headerline">
+                <p id="main">SaveYourBall</p>
+                <p id="aside">-- a fantastic ball game.</p>
+            </div>
+
+            <div>
+                <canvas id="canvas"></canvas>
+            </div>
+
             <div id="goTo"><p>Details</p></div>
         </div>
     </div>
 
-    <div class = "screen introduction"></div>
+    <div class = "screen introduction">
+        <div class="items">
+            <div id="item1">
+            </div>
+            <div id="item2">
 
-    <div class = "screen game"></div>
+            </div>
+            <div id="item3">
 
-    <div class = "screen floor"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class = "screen game">
+        <div class="gamePlant">
+            <div>
+                <canvas id="game" width="1300px" height="800px"></canvas>
+            </div>
+
+            <div id="replay">
+                <p id="play">start</p>
+                <p id='stop'>stop</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class = "screen floor">
+        <div class="tail">
+            <div id="oneMoreSay">
+
+            </div>
+            <div id="foot">
+
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
