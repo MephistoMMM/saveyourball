@@ -16,6 +16,7 @@ var __pointstore = {},
     __QUAD ,
 
     Direction = window.Direction,
+    Point = window.Point,
 
     STOPCOLOR = Direction.stopColor,
     STARTCOLOR = Direction.startColor,
@@ -31,7 +32,6 @@ var __pointstore = {},
     NPCNUMBER = Direction.npcNumber,
     NPCMAXSIZE = Direction.npcMaxSize,
     NPCMINSIZE = Direction.npcMinSize,
-    SPEED = Direction.speed,
     PROTECTNUM = Direction.protectNum,
     PROTECTSIZE = Direction.protectSize,
     AIMSIZE = Direction.aimSize,
@@ -68,7 +68,7 @@ function game_setup(){
 
     //init button
     __gamebutton.start.style.display="block";
-    __gamebutton.start.style.display="none";
+    __gamebutton.stop.style.display="none";
     __gamebutton.div.style.background=STARTCOLOR;
 
 
@@ -82,7 +82,9 @@ function game_setup(){
 function game_engine(){
 
 
-    var i =0;
+    var i =0,
+        h = __canvas.__height,
+        w = __canvas.__width;
 
     //close engine while not isGamePlay.
     if(!__isGamePlay) return;
@@ -93,14 +95,16 @@ function game_engine(){
     //run npc point and draw npc point
     for(i=0;i<__pointstore.npc.length;i++){
         __QUAD.insert(__pointstore.npc[i]);
-        __pointstore.npc[i].run().draw();
+        __pointstore.npc[i]
+            .run(w,h)
+            .draw(__context);
     }
 
     //draw protect point
     for(i=0;i<__pointstore.protect.length;i++){
     
         __QUAD.insert(__pointstore.protect[i]);
-        __pointstore.protect[i].draw();
+        __pointstore.protect[i].draw(__context);
     }
     
     console.log("game_engine")
@@ -108,7 +112,10 @@ function game_engine(){
 
     //run and draw self point
     __QUAD.insert(__pointstore.self);
-    __pointstore.self.run().draw();
+    __pointstore.self
+        .run(w,h)
+        .draw(__context);
+    console.log(__pointstore.self);
 
     __QUAD.insert(__pointstore.aim);
 
@@ -118,6 +125,7 @@ function game_engine(){
          < __pointstore.self.size /4
          ){
         __isDead=true;
+        __isGamePlay=false;
         game_win();
         return false;
     }
@@ -137,13 +145,14 @@ function game_engine(){
             //selfCollidors[i]为npc球
             if(selfCollidors[i].id === 2){                                          //判断失败否
                 __isDead = true;
+                __isGamePlay = false;
                 game_fail();
                 return;
             }
         }
     }
 
-/*
+
     i=0
     while(i < __pointstore.npc.length){                                         //只需要判断会移动得球(npc)
     
@@ -156,23 +165,20 @@ function game_engine(){
                 collidors[j].hasJudge ||
                 __pointstore.npc[i] === collidors[j]
                 ) continue;
+            
+           // if(
+                __pointstore.npc[i].collideEqualMass(collidors[j])
+             //   ) break;
 
-            //发生碰撞就改变方向
-            if(Point.compete(
-                        __pointstore.npc[i],
-                        collidors[j]
-                        )){
-                collidors[j].change();
-                __pointstore.npc[i].change();
-
-            }
         }
 
         __pointstore.npc[i].hasJudge=true;
+
+        i++;
     }
 
-*/
-    setTimeout(game_engine,50);
+
+    setTimeout(game_engine,80);
 
 
 }
@@ -216,8 +222,6 @@ function game_reborn(){
                         2,
                         x,
                         y,
-                        SPEED,
-                        Math.random()*2*Math.PI-Math.PI,
                         size,NPCCOLOR[Math.floor(Math.random()*NPCCOLOR.length)]              //得到随机颜色
 
                         ));
@@ -240,14 +244,11 @@ function game_reborn(){
             x = Math.random()*( width - 2*size)+size,
             y = Math.random()*( height - 2*size)+size;
 
-
             __pointstore.protect.push(new Point(
                         
                         3,
                         x,
                         y,
-                        0,
-                        0,
                         size,PROTECTCOLOR
 
                         ));
@@ -268,8 +269,6 @@ function game_reborn(){
                 1,
                 width - AIMSIZE,
                 height - AIMSIZE,
-                0,
-                0,
                 AIMSIZE,AIMCOLOR
 
                 );
@@ -284,9 +283,8 @@ function game_reborn(){
                 0,
                 PROTECTSIZE,
                 PROTECTSIZE,
-                0,
-                0,
-                SELFSIZE,SELFCOLOR
+                SELFSIZE,SELFCOLOR,
+                true
                 
                 )
     }
@@ -326,7 +324,7 @@ function E_game_control(){
     //modify stop button to start button;
     function change_stop_to_start(){
         __gamebutton.start.style.display="block";
-        __gamebutton.start.style.display="none";
+        __gamebutton.stop.style.display="none";
         __gamebutton.div.style.background=STARTCOLOR;
     
     }
@@ -395,196 +393,6 @@ function E_game_keydown(e){
  * @params event
  */
 function E_game_keyup(e){
-
-}
-
-/*-----------------------------------------------------class-----------------------------------------------------*/
-
-/** Points
- */
-function Point(id,x,y,v,a,size,color){
-
-    this.size = size;
-    this.x = x;
-    this.y = y;
-    this.v = v;
-    this.a = a;                                             //-PI ~ PI,the direction of this Point
-    this.color = color;
-
-    this.id = id;                                            //the level of the this Point
-    this.timeStamp = new Date();
-    this.hasJudge = false;                              //set it to true while has judge
-
-}
-
-
-
-//tow Points collid 
-Point.prototype.change = function(){
-
-    this.a = this.a < 0 
-                    ? -( Math.PI + this.a )
-                    : ( Math.PI - this.a);
-}
-
-
-
-//更新x与y，以及this.timeStamp
-Point.prototype.run = function(){
-
-    var date = new Date();
-
-    //碰到墙壁后根据相应得代码改变this
-    if(this.x-this.size < 0 || 
-            this.x+this.size > __canvas.__width){
-        this.change();
-        this.x += this.v*(date - this.timeStamp)*Math.cos(this.a);
-        this.y += this.v*(date - this.timeStamp)*Math.sin(this.a);
-    }
-
-    if(this.y-this.size < 0 || 
-            this.y+this.size > __canvas.__height){
-
-        this.a = -this.a;
-        this.x += this.v*(date - this.timeStamp)*Math.cos(this.a);
-        this.y += this.v*(date - this.timeStamp)*Math.sin(this.a);
-    
-    }
-
-    this.x += this.v*(date - this.timeStamp)*Math.cos(this.a);
-    this.y += this.v*(date - this.timeStamp)*Math.sin(this.a);
-
-    this.timeStamp =date;
-    this.hasJudge =false;
-
-    return this;
-}
-
-
-
-/** fresh those timeStamp
- */
-Point.prototype.timeFresh = function(){
-
-    this.timeStamp = new Date();
-}
-
-
-
-//画点
-Point.prototype.draw =function(){
-    console.log("drawStart");
-
-    var self = this;
-
-    //draw Point by its id
-    switch(this.id){
-    
-        //画自己
-        case 0: 
-                
-
-        //画终点
-        case 1:
-                
-
-        //画保护点·
-        case 3: drawEasePoints();
-                break;
-
-        //画npc
-        case 2: drawEvil();
-                break;
-    }
-
-
-    //draw PROTECT and aimPoint and selfPoint
-    function drawEasePoints(){
-        console.log("drawEasePointsStart")
-    
-        __context.save();
-        __context.translate(self.x,self.y);
-
-        __context.beginPath();
-        __context.arc(0,0,self.size,0,Math.PI*2,true);
-        __context.fillStyle = self.color;
-        __context.fill();
-
-        __context.restore();
-        console.log(self.size)
-
-    }
-
-
-    //draw evil points ,NPC
-    function drawEvil(){
-        console.log("drawEvilStart")
-    
-
-        var s = self.size;
-
-        __context.save();
-        __context.translate(self.x,self.y);
-
-        __context.beginPath();                                                              //画核心
-        __context.arc(0,0,self.size/4,0,Math.PI*2,true);
-        __context.closePath();
-        __context.fillStyle =self.color; 
-        __context.fill();
-
-        __context.beginPath();                                                              //画边
-        __context.strokeStyle = self.color;
-        console.log(__context.strokeStyle);
-
-        var dx = Math.sin(0);
-        var dy = Math.cos(0);
-        var dig = Math.PI / 7*11;
-
-        for(var i = 0; i<14 ;i ++){
-
-            dx = Math.sin(i*dig);
-            dy = Math.cos(i*dig);
-
-            __context.lineTo(dx*s,dy*s);
-        }
-
-        __context.closePath();
-        __context.stroke();
-
-        __context.restore();
-
-        console.log("drawEvilOver");
-
-    }
-}
-
-
-
-
-/*-----------Class Methon ---------------------*/
-
-/**比较两个球的距离差与半径和
- *
- * @params p1
- * @params p2
- * @return{boolean} true if collid
- */
-Point.compete = function(p1,p2){
-    
-    var distance = (p1.x-p2.x)*(p1.x-p2.x)+
-                   (p1.y-p2.y)*(p1.y-p2.y),
-        sizeSum = (p1.size + p2.size)*(p1.size + p2.size);
-
-    return sizeSum >= distance;
-
-}
-
-
-/** 得到圆心距得平方
- */
-Point.distance = function(p1,p2){
-
-    return (p1.x-p2.x)*(p1.x-p2.x)+ (p1.y-p2.y)*(p1.y-p2.y);
 
 }
 
