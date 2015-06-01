@@ -5,7 +5,8 @@
  */
 
 var Direction = window.Direction,
-    SPEED = Direction.speed;
+    SPEED = Direction.speed,
+    SPEEDADD = Direction.speedAdd;
 
 /*------------------------------------------------Point------------------------------------------------*/
 
@@ -24,21 +25,23 @@ function Point(id,x,y,size,color,hasV){
     this.loc =new PVector(x,y); 
 
     if(!hasV)
-        this.vel = PVector.mult( 
-                (new PVector(
-                     Math.random(),
-                     Math.random()
-                )).normalize() ,SPEED);
-    else 
+        this.vel =new PVector(
+                          __Random(-SPEED,SPEED),
+                          __Random(-SPEED,SPEED)
+                );
+    else{
         this.vel = new PVector(0,0);
+        this.self = true;                                   //true 表示不会碰撞反弹
+    } 
 }
 
 Point.prototype.colliding = false
 
 // Main method to operate object
-Point.prototype.run = function (w,h) {
+Point.prototype.run = function (i,o) {
     this.update();                                      //位移更新
-    this.borders(w,h);                                     //判断是否撞到边界
+    
+    this.borders(i,o);                                     //判断是否撞到边界
     this.hasJudge=false;
 
     return this;
@@ -50,7 +53,7 @@ Point.prototype.update = function() {
 
     this.loc.add(PVector.mult(
                 this.vel,
-                (date - this.timeStamp)));
+                (date - this.timeStamp)/1000));
 
     //更新速度变化时间点
     this.timeStamp =date;
@@ -58,22 +61,36 @@ Point.prototype.update = function() {
 }
 
 // Check for bouncing off borders
-Point.prototype.borders = function(w,h) {
-    if (this.loc.y+ this.size > h) {
-        this.vel.y *= -this.bounce;
-        this.loc.y = h-this.size;
+Point.prototype.borders = function(ir,or) {
+
+    var R =new PVector(or,or),
+        dR = PVector.sub(this.loc,R);
+
+    if (dR.mag()+this.size >= or) {
+
+        var Rdot = PVector.normalize(dR).dot(this.vel)*2,
+            dv = PVector.setMag(dR,Rdot+SPEEDADD),
+            dor = PVector.setMag(dR,or-this.size);
+
+        if(!this.self){
+           this.vel.sub(dv);
+           this.vel.setMag(this.vel.mag()+SPEEDADD);
+        }
+
+        this.loc = PVector.add(R,dor);
     }
-    else if (this.loc.y-this.size < 0) {
-        this.vel.y *= -this.bounce;
-        this.loc.y = this.size;
-    }
-    if (this.loc.x+this.size > w) {
-        this.vel.x *= -this.bounce;
-        this.loc.x = w-this.size;
-    }
-    else if (this.loc.x-this.size < 0) {
-        this.vel.x *= -this.bounce;
-        this.loc.x = this.size;
+    else if (dR.mag()-this.size <= ir) {
+
+        var Rdot = -PVector.normalize(dR).dot(this.vel)*2,
+            dv = PVector.setMag(dR,Rdot),
+            dor = PVector.setMag(dR,ir+this.size);
+
+        if(!this.self){
+           this.vel.add(dv); 
+           this.vel.setMag(this.vel.mag()+SPEEDADD);
+        }
+
+        this.loc = PVector.add(R,dor);
     }
 }
 
@@ -128,7 +145,7 @@ Point.prototype.timeFresh = function(){
 // Method to display
 Point.prototype.draw = function(ctx) {
 
-    console.log("drawStart");
+    
 
     var self = this;
 
@@ -136,15 +153,7 @@ Point.prototype.draw = function(ctx) {
     switch(this.id){
     
         //画自己
-        case 0: 
-                
-
-        //画终点
-        case 1:
-                
-
-        //画保护点·
-        case 3: drawEasePoints();
+        case 0: drawEasePoints();
                 break;
 
         //画npc
@@ -155,7 +164,7 @@ Point.prototype.draw = function(ctx) {
 
     //draw PROTECT and aimPoint and selfPoint
     function drawEasePoints(){
-        console.log("drawEasePointsStart")
+        
     
         ctx.save();
         ctx.translate(self.loc.x,self.loc.y);
@@ -166,14 +175,13 @@ Point.prototype.draw = function(ctx) {
         ctx.fill();
 
         ctx.restore();
-        console.log(self.size)
 
     }
 
 
     //draw evil points ,NPC
     function drawEvil(){
-        console.log("drawEvilStart")
+        
     
 
         var s = self.size;
@@ -189,7 +197,6 @@ Point.prototype.draw = function(ctx) {
 
         ctx.beginPath();                                                              //画边
         ctx.strokeStyle = self.color;
-        console.log(ctx.strokeStyle);
 
         var dx = Math.sin(0);
         var dy = Math.cos(0);
@@ -208,7 +215,7 @@ Point.prototype.draw = function(ctx) {
 
         ctx.restore();
 
-        console.log("drawEvilOver");
+        
 
     }
 
@@ -291,7 +298,7 @@ PVector.prototype.mult = function (mulfFactor) {
 PVector.prototype.div = function (divFactor) {
     if(!divFactor){
         var err = "Can't div 0"
-        console.log(err)
+        
         throw new Error(err)
     } else {
         this.x /= divFactor
@@ -393,6 +400,20 @@ PVector.mult = function (p,mulfFactor) {
 
 }
 
+PVector.setMag = function (p,newMag) {
+    if( !PVector.mag(p) ){
+        return new PVector(0,0);
+    } else {
+        var m = newMag / PVector.mag(p) || 0;
+        return PVector.mult(p,m)
+    }
+
+}
+
+PVector.normalize =function(p){
+
+    return PVector.setMag(p,1.0);
+}
 /*--------------------------------------------------------other tool----------------------------------*/
 
 //随机函数
@@ -411,3 +432,4 @@ function __Limit (l, min, max) {
 /*------------------------------------------------------------------------------------------*/
 
 window.Point = Point;
+window.PVector =PVector;

@@ -3,6 +3,7 @@
 <head lang="en">
   <meta charset="UTF-8">
   <link  rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/button.css">
   <script type="application/javascript" src="js/Direction.js"></script>
   <script type="application/javascript" src="js/quadtree_circle.js"></script>
   <script type="application/javascript" src="js/scroll.js"></script>
@@ -43,14 +44,17 @@
 
     <div class = "screen game">
         <div class="gamePlant">
+
+            <div id="replay">
+                <p id="play" class="button button-glow  ">start</p>
+                <p id='stop' class="button button-glow  ">stop</p>
+            </div>
+
+
             <div>
                 <canvas id="game" width="1300px" height="800px"></canvas>
             </div>
 
-            <div id="replay">
-                <p id="play">start</p>
-                <p id='stop'>stop</p>
-            </div>
 
         </div>
     </div>
