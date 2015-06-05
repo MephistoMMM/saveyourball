@@ -27,7 +27,7 @@
         this.buttun;
 
         //网页屏幕大小
-        this.offsetHeight= window.screen.height; 
+        this.offsetHeight= window.screen.availHeight; 
     }
 
 

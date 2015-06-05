@@ -14,7 +14,8 @@
         __isGamePlay = false,                                           //游戏是否进行中
         __isDead = true,                                                //是否已经挂了
         __QUAD ,
-        __gameTime = 0;
+        __gameTime = 0,
+        __gameAudio,
 
         Direction = window.Direction,
         Point = window.Point,
@@ -62,12 +63,13 @@
         __gamebutton.div = document.body.querySelector("#replay");
         __gamebutton.start = document.body.querySelector("#play");
         __gamebutton.stop = document.body.querySelector("#stop");
+        __gameAudio  = document.body.querySelector("#audio");
 
         //setup controlor
         __gamebutton.div.addEventListener("mousedown",E_game_control,false);
 
         //调整canvas大小
-        __canvas.__osize = SIZERATE*window.screen.height;
+        __canvas.__osize = SIZERATE*window.screen.availHeight;
         __canvas.__isize = __canvas.__osize*INRATE;
         __canvas.style.height ="95%";
         __canvas.style.width ="100%";
@@ -213,7 +215,7 @@
         //close engine while not isGamePlay.
         if(!__isGamePlay) return;
 
-        __context.clearRect(0,0,9999,9999);
+        __context.clearRect(-1000,-1000,9999,9999);
         __QUAD.clear();
 
         drawBorder(STOPCOLOR);
@@ -251,6 +253,7 @@
                 if(selfCollidors[i].id === 2){                                          //判断失败否
                     __isDead = true;
                     __isGamePlay = false;
+                    __gameAudio.pause();
                     setupInit();
                     drawTitle(3);
                     return;
@@ -336,8 +339,7 @@
         //当被设为开启状态时，除了换颜色，还需要重启引擎
         if(__isGamePlay){
 
-            __pointstore.self.vel.x=0;                                                      //对自己速度归零，防止出bug
-            __pointstore.self.vel.y=0;
+            __gameAudio.play();
 
             change_start_to_stop();
             timeAdust();
@@ -347,6 +349,10 @@
             game_engine();
 
         }else{
+
+            __pointstore.self.vel.x=0;                                                      //对自己速度归零，防止出bug
+            __pointstore.self.vel.y=0;
+            __gameAudio.pause();
 
             drawBorder(STARTCOLOR);
             drawTime(STOPCOLOR);
@@ -470,7 +476,6 @@
          */
         function E_game_keydown(e){
 
-            console.log(e.keyCode);
 
             switch(e.keyCode){
             
@@ -593,6 +598,8 @@
 
                 var p;
 
+                if(!isDown.up) return;                                                  //only work while up has down
+
                 if(isSlow) 
                     p = new PVector(0,-SPEED/SLOWRATE);
                 else 
@@ -607,6 +614,8 @@
             
                 var p;
 
+                if(!isDown.down) return;                                                  //only work while down has down
+
                 if(isSlow)
                     p = new PVector(0,SPEED/SLOWRATE);
                 else
@@ -619,6 +628,8 @@
             function left(){
                 
                 var p;
+
+                if(!isDown.left) return;                                                  //only work while left has down
 
                 if(isSlow)
                     p = new PVector(SPEED/SLOWRATE,0);
@@ -634,6 +645,8 @@
             
                 var p;
 
+                if(!isDown.right) return;                                                  //only work while right has down
+
                 if(isSlow)
                     p = new PVector(-SPEED/SLOWRATE,0);
                 else
@@ -646,6 +659,8 @@
 
             function slow(){
             
+                if(!isDown.slow) return;                                                  //only work while SLOW  has down
+
                 isSlow = false;
 
                 __pointstore.self.vel.mult(SLOWRATE);
