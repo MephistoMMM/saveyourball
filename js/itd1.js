@@ -8,7 +8,9 @@
 
     var x,y,w,h
     var direction
-    var speed = 2
+    var speed = 4
+    var slowSpeed = 2
+    var slow = true
 
     //window.onload = start2
     window.addEventListener("load",start2,false);
@@ -32,7 +34,12 @@
 
             direction = getDiretion()
 
-            update(direction)
+            if(slow==true){
+                updateS(direction)
+            } else {
+                update(direction)
+            }
+            //console.log(slow)
             render(ctx)
 
         }, 20)
@@ -43,6 +50,11 @@
 
     function getDiretion(){
 
+        //change the speed
+        if(x == Math.round(w/3) && y == Math.round(h/3)){
+            slow = !slow
+        }
+
         if(x==w*2/3 && y>h/3){
             return 0
         }if(y==h*2/3 && x<w*2/3){
@@ -52,6 +64,7 @@
         }if(y==h/3 && x>w/3){
             return 3
         }
+
 
     }
 
@@ -67,20 +80,45 @@
     }
 
 
+    function updateS(d){
+
+        switch(d){
+            case 0: y-=slowSpeed;break
+            case 1: x+=slowSpeed;break
+            case 2: y+=slowSpeed;break
+            case 3: x-=slowSpeed;break
+        }
+    }
+
+
     function render(ctx){
 
         ctx.clearRect(0,0,w,h)
 
+        //your ball
         ctx.fillStyle = "#000000"
         ctx.beginPath()
         ctx.arc(x, y, 10, 0, Math.PI*2)
         ctx.closePath()
         ctx.fill()
 
-        ctx.beginPath()
-        ctx.arc(w-x, h-y, 15, 0,Math.PI*2)
-        ctx.closePath()
-        ctx.fill()
+        ctx.strokeStyle = "#000000"
+
+        var shift = slow ? "shitf + " : ""
+        var dire
+        switch (direction){
+            case 0: dire = "W";break
+            case 1: dire = "D";break
+            case 2: dire = "S";break
+            case 3: dire = "A";break
+        }
+
+        ctx.font = "20px Arial"
+        ctx.fillText(shift, 130, 140)
+        ctx.fillText(dire, 150, slow ? 170 : 150)
+
+
+
 
 
     }

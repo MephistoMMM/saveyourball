@@ -81,7 +81,8 @@
 		    ctx.strokeStyle = "#000000"
 		    ctx.stroke();
 
-		    ctx.fillText("I am the best!" , 2*r,-r)
+            //the words
+		    ctx.fillText("I am the best!" , -r,-3*r)
         }
 
 

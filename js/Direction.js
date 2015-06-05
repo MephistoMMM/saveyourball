@@ -32,7 +32,7 @@ window.Direction = {
     quadObjects:5,                          //quad节点含得球数
     quadLevels:8,                           //quad得深度
 
-    selfSpeed : 200,                        //自己得输的
+    selfSpeed : 250,                        //自己得输的
    
     timeAdustLoop :20,                       //计时器loop时间
     drawLoop : 25,                          //画图loop

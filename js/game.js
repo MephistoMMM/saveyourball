@@ -35,6 +35,7 @@
         FONTPX = Direction.fontPX,
         SLOWRATE = Direction.slowRate,
         SPEED = Direction.speed,
+        SELFSPEED = Direction.selfSpeed,
 
         TITLEBORDERCOLOR = Direction.titleBorderColor,
         AIMCOLOR = Direction.aimColor,
@@ -501,9 +502,9 @@
                 if(!isDown.up){
                 
                     if(isSlow) 
-                        p = new PVector(0,SPEED/SLOWRATE);
+                        p = new PVector(0,SELFSPEED/SLOWRATE);
                     else 
-                        p = new PVector(0,SPEED);
+                        p = new PVector(0,SELFSPEED);
 
                     __pointstore.self.vel.add(p);
                     isDown.up =true;
@@ -517,9 +518,9 @@
 
                 if(!isDown.down){
                     if(isSlow)
-                        p = new PVector(0,-SPEED/SLOWRATE);
+                        p = new PVector(0,-SELFSPEED/SLOWRATE);
                     else
-                        p = new PVector(0,-SPEED);
+                        p = new PVector(0,-SELFSPEED);
 
                     __pointstore.self.vel.add(p);
                     isDown.down =true;
@@ -532,9 +533,9 @@
 
                 if(!isDown.left){
                     if(isSlow)
-                        p = new PVector(-SPEED/SLOWRATE,0);
+                        p = new PVector(-SELFSPEED/SLOWRATE,0);
                     else
-                        p = new PVector(-SPEED,0);
+                        p = new PVector(-SELFSPEED,0);
 
                     __pointstore.self.vel.add(p);
                     isDown.left = true;
@@ -548,9 +549,9 @@
 
                 if(!isDown.right){
                     if(isSlow)
-                        p = new PVector(SPEED/SLOWRATE,0);
+                        p = new PVector(SELFSPEED/SLOWRATE,0);
                     else
-                        p = new PVector(SPEED,0);
+                        p = new PVector(SELFSPEED,0);
 
                     __pointstore.self.vel.add(p);
                     isDown.right = true;
@@ -601,9 +602,9 @@
                 if(!isDown.up) return;                                                  //only work while up has down
 
                 if(isSlow) 
-                    p = new PVector(0,-SPEED/SLOWRATE);
+                    p = new PVector(0,-SELFSPEED/SLOWRATE);
                 else 
-                    p = new PVector(0,-SPEED);
+                    p = new PVector(0,-SELFSPEED);
 
                 __pointstore.self.vel.add(p);
                 isDown.up = false;
@@ -617,9 +618,9 @@
                 if(!isDown.down) return;                                                  //only work while down has down
 
                 if(isSlow)
-                    p = new PVector(0,SPEED/SLOWRATE);
+                    p = new PVector(0,SELFSPEED/SLOWRATE);
                 else
-                    p = new PVector(0,SPEED);
+                    p = new PVector(0,SELFSPEED);
 
                 __pointstore.self.vel.add(p);
                 isDown.down =false;
@@ -632,9 +633,9 @@
                 if(!isDown.left) return;                                                  //only work while left has down
 
                 if(isSlow)
-                    p = new PVector(SPEED/SLOWRATE,0);
+                    p = new PVector(SELFSPEED/SLOWRATE,0);
                 else
-                    p = new PVector(SPEED,0);
+                    p = new PVector(SELFSPEED,0);
 
                 __pointstore.self.vel.add(p);
                 isDown.left =false;
@@ -648,9 +649,9 @@
                 if(!isDown.right) return;                                                  //only work while right has down
 
                 if(isSlow)
-                    p = new PVector(-SPEED/SLOWRATE,0);
+                    p = new PVector(-SELFSPEED/SLOWRATE,0);
                 else
-                    p = new PVector(-SPEED,0);
+                    p = new PVector(-SELFSPEED,0);
 
                 __pointstore.self.vel.add(p);
                 isDown.right =false;

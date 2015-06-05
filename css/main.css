@@ -105,7 +105,9 @@ body{
 
 
 .introduction{
-
+    font-size: 24px;
+    font-style: italic;
+    color: #4cb0f9;
 }
 
 .items{
@@ -124,7 +126,7 @@ body{
     width:20%;
     height:70%;
     background: white;
-    margin: 100px;
+    margin: 80px;
     border:medium groove gold;
     border-radius: 2em;
 }

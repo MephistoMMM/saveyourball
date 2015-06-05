@@ -69,6 +69,8 @@
             ctx.lineTo(dx*or,dy*or);
         }
 
+        ctx.fillText("DANGER--→",-120,0)
+
         ctx.closePath();
         ctx.stroke();
 
