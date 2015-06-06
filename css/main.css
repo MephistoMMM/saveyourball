@@ -185,11 +185,28 @@ body{
 
 .gamePlant{
 
+    position:relative;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-box-pack: center;
+    -webkit-box-pack: start;
     -webkit-box-align: center;
+    width: 100%;
 
+}
+
+
+.gamePlant > div{
+    margin:0 auto;
+    padding:0 auto;
+}
+
+#replay{
+    position: absolute;
+    top:2%;
+    left:2%;
+    z-index:999;
+    margin:0 0;
+    padding:0 auto;
 }
 
 
@@ -237,7 +254,7 @@ body{
 #footInformation{
     width:100%;
 
-    margin:2% 0 ;
+    margin:1% 0 ;
     display: -webkit-box;
     align:center;
     -webkit-box-pack: center;

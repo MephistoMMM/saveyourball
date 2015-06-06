@@ -69,11 +69,12 @@
         //setup controlor
         __gamebutton.div.addEventListener("mousedown",E_game_control,false);
 
-        //调整canvas大小
-        __canvas.__osize = SIZERATE*window.screen.availHeight;
-        __canvas.__isize = __canvas.__osize*INRATE;
-        __canvas.style.height ="95%";
+        __canvas.style.height ="90%";
         __canvas.style.width ="100%";
+
+        //调整canvas大小
+        __canvas.__osize = SIZERATE*__canvas.offsetHeight;
+        __canvas.__isize = __canvas.__osize*INRATE;
 
         //设置绘图环境
         __context = __canvas.getContext("2d");
