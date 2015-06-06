@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d925da4e-603b-432f-b90f-516145b26077" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/introduction.js" afterPath="$PROJECT_DIR$/js/introduction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/itd1.js" afterPath="$PROJECT_DIR$/js/itd1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/itd2.js" afterPath="$PROJECT_DIR$/js/itd2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/itd3.js" afterPath="$PROJECT_DIR$/js/itd3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.css" afterPath="$PROJECT_DIR$/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="d925da4e-603b-432f-b90f-516145b26077" name="Default" comment="" />
     <ignored path="Mephisto-HtmlClassFinWork-dev.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +27,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.546371" vertical-offset="1604" max-vertical-offset="2520">
-              <caret line="125" column="71" selection-start-line="125" selection-start-column="71" selection-end-line="125" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.9092742" vertical-offset="1604" max-vertical-offset="2520">
+              <caret line="137" column="26" selection-start-line="137" selection-start-column="26" selection-end-line="137" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -650,8 +642,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.546371" vertical-offset="1604" max-vertical-offset="2520">
-          <caret line="125" column="71" selection-start-line="125" selection-start-column="71" selection-end-line="125" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.9092742" vertical-offset="1604" max-vertical-offset="2520">
+          <caret line="137" column="26" selection-start-line="137" selection-start-column="26" selection-end-line="137" selection-end-column="26" />
           <folding />
         </state>
       </provider>
