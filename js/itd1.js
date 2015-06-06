@@ -3,8 +3,9 @@
  * control
  * @xana 2015/6
  */
- 
+
 (function(window){
+
 
     var x,y,w,h
     var direction
@@ -12,22 +13,24 @@
     var slowSpeed = 2
     var slow = true
 
-    //window.onload = start2
-    window.addEventListener("load",start2,false);
 
 
-    function start2() {
+
+
+
+    //window.addEventListener("load",start2,false);
+
+
+    function start1() {
 
         var canvas1 = document.getElementById("canvas1")
         var ctx = canvas1.getContext("2d")
 
-        w = canvas1.width = 300
-        h = canvas1.height = 300
-
+        w = canvas1.width = 301;
+        h = canvas1.height = 301;
 
         x = Math.round(w/3)
         y = Math.round(h/3)
-
 
 
         setInterval(function(){
@@ -48,6 +51,7 @@
 
 
 
+    //0,1,2,3 for W,D,S,A
     function getDiretion(){
 
         //change the speed
@@ -55,13 +59,13 @@
             slow = !slow
         }
 
-        if(x==w*2/3 && y>h/3){
+        if(x>=w*2/3 && y>h/3){
             return 0
-        }if(y==h*2/3 && x<w*2/3){
+        }if(y>=h*2/3 && x<w*2/3){
             return 1
-        }if(x==w/3 && y<=h*2/3){
+        }if(x<=w/3 && y<=h*2/3){
             return 2
-        }if(y==h/3 && x>w/3){
+        }if(y<=h/3 && x>w/3){
             return 3
         }
 
@@ -113,15 +117,13 @@
             case 3: dire = "A";break
         }
 
-        ctx.font = "20px Arial"
+        ctx.font = 20+"px Arial"
         ctx.fillText(shift, 130, 140)
         ctx.fillText(dire, 150, slow ? 170 : 150)
 
 
-
-
-
     }
 
-}(window));
+    window.Item1Adjust = start1;
 
+}(window));

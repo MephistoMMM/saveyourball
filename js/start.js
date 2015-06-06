@@ -3,7 +3,10 @@
  */
 
 var DealScroll = window.DealScroll,
-    gameSetup = window.gameSetup; 
+    gameSetup = window.gameSetup,
+    Item1Adjust = window.Item1Adjust,
+    Item2Adjust = window.Item2Adjust,
+    Item3Adjust = window.Item3Adjust;
 
 window.onload = function(){
 
@@ -12,5 +15,10 @@ window.onload = function(){
 
     //安装游戏
     gameSetup();
+
+    //介绍适应屏幕
+    Item1Adjust();
+    Item2Adjust();
+    Item3Adjust();
 
 }

@@ -8,7 +8,7 @@
 	var x,y,w,h
 	var frame = true
 
-	window.addEventListener("load",start3,false);
+	//window.addEventListener("load",start3,false);
 
 	function start3(){
 
@@ -94,6 +94,7 @@
 	};
 
 
+    window.Item3Adjust = start3;
 
 
 }(window));
