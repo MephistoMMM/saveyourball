@@ -216,32 +216,68 @@ body{
 }
 
 
-
 #foot{
+    font-size: 1em;
+    font-style: italic;
+    color:gold;
     width:100%;
-    height: 40%;
+    height:40%;
     background:black;
-
 
     display: -webkit-box;
     align:center;
+
+    -webkit-box-orient: vertical;
     -webkit-box-pack: center;
-    -webkit-box-align: center;
+    -webkit-box-align: end;
+}
+
+
+
+#footInformation{
+    width:100%;
+
+    margin:2% 0 ;
+    display: -webkit-box;
+    align:center;
+    -webkit-box-pack: center;
 }
 
 
 .logo_foot{
-    -webkit-box-flex:1;
+    margin: 0 0;
+    -webkit-box-flex:3;
 }
 
 
 .worker{
+
     margin: 0 0;
-    padding:0 auto;
-    -webkit-box-flex:2;
-    height: 90%;
+    padding: 0 2%;
+    -webkit-box-flex:3;
+    height: 70%;
     border-left: 1px solid gold;
 
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+
+}
+
+
+.authors{
+
+    width:90%;
+    -webkit-box-flex:1;
+    margin:3%;
+    border-bottom: 1px solid gold;
+}
+
+
+.authorsInformation{
+    padding-left: 30%;
+    -webkit-box-flex:4;
+    margin:3%;
 }
 
 
