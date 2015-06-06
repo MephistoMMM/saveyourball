@@ -10,7 +10,6 @@
 
 	function start0() {
 
-        var frame = true;
 
 		img = new Image();
 		img.src = "img/mf1.jpg"
@@ -32,9 +31,8 @@
         img.onload = function() {
             setInterval(function () {
                 ctx.clearRect(0, 0, 800, 400);
-                ctx.drawImage(img, frame ? 90 : 110, frame ? 0 : 20, 600, 388)
-                frame = !frame
-            }, 300)
+                ctx.drawImage(img, 80+20*Math.random(), 20*Math.random(), 600, 388)
+            }, 50)
 
         }
 
