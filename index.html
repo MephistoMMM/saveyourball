@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
   <link  rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/button.css">
   <script type="application/javascript" src="js/Direction.js"></script>
@@ -34,40 +35,51 @@
     </div>
 
     <div class = "screen introduction">
-        <div class="items">
 
-            <div id="item1">
-                <div>
-                    <canvas id="canvas1"></canvas>
+        <div id="introductionPlane">
+
+            <div class="toPlay button button-glow button-rounded button-highlight"><p>playGame</p></div>
+
+            <div class="items">
+
+                <div id="item1" class="item">
+                    <div>
+                        <canvas id="canvas1" class="introductionCanvas"></canvas>
+                    </div>
+
+                    <div>
+                        <p>Using WASD to control your ball</p>
+                        <p>Shift/J for mini move</p>
+                    </div>
                 </div>
-                <div>
-                    <p>Using WASD to control your ball</p>
-                    <p>Shift/J for mini move</p>
+
+                <div id="item2" class="item">
+                    <div>
+                        <canvas id="canvas2" class="introductionCanvas"></canvas>
+                    </div>
+
+                    <div>
+                        <p>Tying to keep away from those unfriendly spike</p>
+                        <p>U/R for pause or restart</p>
+                    </div>
                 </div>
+
+                <div id="item3" class="item">
+                    <div>
+                        <canvas id="canvas3" class="introductionCanvas"></canvas>
+                    </div>
+
+                    <div>
+                        <p>Resist as long as ♂ you ♂ can!</p>
+                        <p>To be the King ♂ of ♂ hilosophers, young man!</p>
+                    </div>
+                </div>
+
+
             </div>
-
-            <div id="item2">
-                <div>
-                    <canvas id="canvas2"></canvas>
-                </div>
-                <div>
-                    <p>Tying to keep away from those unfriendly spike</p>
-                    <p>U/R for pause or restart</p>
-                </div>
-           </div>  
-
-            <div id="item3">
-                <div>
-                    <canvas id="canvas3"></canvas>
-                </div>
-                <div>
-                    <p>Resist as long as ♂ you ♂ can!</p>
-                    <p>To be the King ♂ of ♂ hilosophers, young man!</p>
-                </div>
-            </div>
-
-
         </div>
+
+
     </div>
 
     <div class = "screen game">
@@ -101,6 +113,15 @@
 
             </div>
             <div id="foot">
+
+                <div class="logo_foot"><p>playGame</p></div>
+
+                <div class = "worker">
+
+                </div>
+                <div class = "worker">
+
+                </div>
 
             </div>
         </div>

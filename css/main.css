@@ -105,30 +105,64 @@ body{
 
 
 .introduction{
-    font-size: 24px;
-    font-style: italic;
-    color: #4cb0f9;
+
+
+}
+
+#introductionPlane{
+    background: url(../img/dbgrid.png);
+    display: -webkit-box;
+    align:center;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+
+    height: 100%;
+    width: 100%;
 }
 
 .items{
     display: -webkit-box;
     align:center;
-    -webkit-box-pack: justify;
+    -webkit-box-pack: center;
     -webkit-box-align: center;
-    height: 100%;
+    height: 90%;
     width: 100%;
-    background: url(../img/dbgrid.png);
 
 }
 
 
-.items > div{
+.item{
     width:20%;
     height:70%;
     background: white;
     margin: 80px;
     border:medium groove gold;
     border-radius: 2em;
+}
+
+
+
+
+.item > div{
+    display: -webkit-box;
+    align:center;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+
+
+.item > div > p{
+
+    font-size: 1.5em;
+    font-style: italic;
+    text-shadow: 2px 0px 0px gold;
+    color: black;
+    padding:0 10%;
+    margin: 10px ;
+
 }
 
 
@@ -187,5 +221,39 @@ body{
     width:100%;
     height: 40%;
     background:black;
+
+
+    display: -webkit-box;
+    align:center;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
 }
 
+
+.logo_foot{
+    -webkit-box-flex:1;
+}
+
+
+.worker{
+    margin: 0 0;
+    padding:0 auto;
+    -webkit-box-flex:2;
+    height: 90%;
+    border-left: 1px solid gold;
+
+}
+
+
+
+/*---------------------------------------------------------other----------------------------------------*/
+
+
+.toPlay{
+    padding:0 auto;
+
+}
+.toPlay > p{
+
+    margin: 0 auto;
+}

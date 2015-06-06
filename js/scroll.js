@@ -22,9 +22,11 @@
         //the space between divs
         this.space = TOPMARGIN;
         //get all divs
-        this.divs; 
+        this.screens; 
         //向下移动的按钮
-        this.buttun;
+        this.goTo;
+        //转到游戏界面得按钮
+        this.toPlays;
 
         //网页屏幕大小
         this.offsetHeight= window.screen.availHeight; 
@@ -39,20 +41,24 @@
 
 
         //如果没有元素，则直接获取
-        this.divs = document.body.querySelectorAll('.screen');
-        this.buttun = document.body.querySelector('#goTo');
+        this.screens = document.body.querySelectorAll('.screen');
+        this.goTo = document.body.querySelector('#goTo');
+        this.toPlays = document.body.querySelectorAll('.toPlay');
 
         //给div设置高
-        for(var i=0;i<this.divs.length;i++){
-            this.divs[i].style.height = this.offsetHeight + 'px';
-            this.divs[i].style.margin = this.space+' 0';
+        for(var i=0;i<this.screens.length;i++){
+            this.screens[i].style.height = this.offsetHeight + 'px';
+            this.screens[i].style.margin = this.space+' 0';
         }
 
 
         //给按钮做动画
-        this.buttun.querySelector('p').style.left = document.body.offsetWidth /2 +'px';
-        this.buttun.addEventListener("mousedown",this.__mouseDown(),false);
+        this.goTo.querySelector('p').style.left = document.body.offsetWidth /2 +'px';
+        this.goTo.addEventListener("mousedown",this.__mouseDown(this.offsetHeight),false);
 
+
+        for(var i=0;i<this.toPlays.length;i++)
+            this.toPlays[i].addEventListener("mousedown",this.__mouseDown(this.offsetHeight*2),false);
 
 
 
@@ -71,17 +77,12 @@
 
 
 
-
-
     //goTo按钮点击函数
-    DealScroll.prototype.__mouseDown = function(){
-
-        var self = this;
-
+    DealScroll.prototype.__mouseDown = function(height){
         return function (){
 
             //移动动画
-            __sd(document.body.scrollTop,new Date(),self.offsetHeight);
+            __sd(document.body.scrollTop,new Date(),height);
         
         }
     }
