@@ -19,8 +19,11 @@
         var canvas2 = document.getElementById("canvas2");
         var context = canvas2.getContext("2d");
 
-        w = canvas2.width = 300
-        h = canvas2.height = 300
+        var it2 = document.querySelector("#item2 div")
+
+
+        w = canvas2.width = it2.clientWidth;
+        h = canvas2.height = it2.clientWidth;
     
         x = canvas2.width /2
         y = canvas2.height/2
@@ -53,7 +56,7 @@
 
         ctx.save();
 
-        ctx.translate(x, y);
+        ctx.translate(x*1.2, y);
 
         ctx.beginPath();                                                           //画核心
         ctx.arc(0,0,r,0,Math.PI*2,true);
@@ -77,7 +80,7 @@
             ctx.lineTo(dx*or,dy*or);
         }
 
-        ctx.fillText("DANGER--→",-120,0)
+        ctx.fillText("DANGER--→",-110,0)
 
         ctx.closePath();
         ctx.stroke();

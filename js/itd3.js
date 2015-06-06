@@ -15,8 +15,10 @@
 		var canvas3 = document.getElementById("canvas3");
 		var context3 = canvas3.getContext("2d");
 
-		w = canvas3.width = 300
-		h = canvas3.height = 300
+        var it3 = document.querySelector("#item3 div")
+
+		w = canvas3.width = it3.clientWidth
+		h = canvas3.height = it3.clientWidth
 
 		x = w/2
 		y = h/2

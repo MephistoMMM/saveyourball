@@ -10,8 +10,10 @@
 
 	function start0() {
 
+        var frame = true;
+
 		img = new Image();
-		img.src = "img/1.png"
+		img.src = "img/mf1.jpg"
 
 
 		var canvas = document.getElementById("canvas");
@@ -20,19 +22,23 @@
 		canvas.width = 800;
 		canvas.height = 400;
 
+        ctx.backgroundColor = "#000"
+
 		ctx.strokeStyle = "#FFFFFF";
 		ctx.fillStyle = "#FFFFFF";
 
-		ctx.rect(0,0,800,400);
-		ctx.fill();
 
-		ctx.beginPath();
-		ctx.moveTo(0,0);
-		ctx.lineTo(100,100);
-		ctx.stroke();
-		ctx.closePath();
 
-		img.onload = function(){ctx.drawImage(img,100,0,600,388)}
+        img.onload = function() {
+            setInterval(function () {
+                ctx.clearRect(0, 0, 800, 400);
+                ctx.drawImage(img, frame ? 90 : 110, frame ? 0 : 20, 600, 388)
+                frame = !frame
+            }, 300)
+
+        }
+
+
 
 	};
 }(window))

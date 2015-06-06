@@ -15,9 +15,6 @@
 
 
 
-
-
-
     //window.addEventListener("load",start2,false);
 
 
@@ -26,8 +23,10 @@
         var canvas1 = document.getElementById("canvas1")
         var ctx = canvas1.getContext("2d")
 
-        w = canvas1.width = 301;
-        h = canvas1.height = 301;
+        var it1 = document.querySelector("#item1 div")
+
+        w = canvas1.width = it1.clientWidth;
+        h = canvas1.height = it1.clientWidth;
 
         x = Math.round(w/3)
         y = Math.round(h/3)
@@ -42,7 +41,6 @@
             } else {
                 update(direction)
             }
-            //console.log(slow)
             render(ctx)
 
         }, 20)
@@ -59,7 +57,7 @@
             slow = !slow
         }
 
-        if(x>=w*2/3 && y>h/3){
+        if(x>=w*2/3  && y>h/3){
             return 0
         }if(y>=h*2/3 && x<w*2/3){
             return 1
@@ -118,12 +116,14 @@
         }
 
         ctx.font = 20+"px Arial"
-        ctx.fillText(shift, 130, 140)
-        ctx.fillText(dire, 150, slow ? 170 : 150)
+        ctx.fillText(shift, w/2-20, w/2-10)
+        ctx.fillText(dire, w/2, slow ? w/2+20 : w/2)
 
 
     }
 
     window.Item1Adjust = start1;
+
+
 
 }(window));
