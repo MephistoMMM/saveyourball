@@ -7,7 +7,8 @@ var DealScroll = window.DealScroll,
     Item1Adjust = window.Item1Adjust,
     Item2Adjust = window.Item2Adjust,
     Item3Adjust = window.Item3Adjust,
-    introductionAdjust = window.introductionAdjust
+    introductionAdjust = window.introductionAdjust,
+    logoAdjust = window.logoAdjust
 
 window.onload = function(){
 
@@ -22,5 +23,6 @@ window.onload = function(){
     Item1Adjust();
     Item2Adjust();
     Item3Adjust();
+    logoAdjust();
 
 }

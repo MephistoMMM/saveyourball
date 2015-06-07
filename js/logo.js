@@ -1,11 +1,8 @@
 /**
- * the img of the first page
- *
- * @xana 2015/5/30
+ * logo of last page
+ * Created by xana on 15/6/7.
  */
-
 (function(window){
-
 
 
     var speed = 0.05
@@ -16,15 +13,16 @@
 
 
 
-    function start0(){
+    function startl(){
 
-        var canvas = document.getElementById("canvas")
+        var canvas = document.getElementById("canvasl")
         var ctx = canvas.getContext("2d")
 
-        var adjustLength = window.innerHeight > window.innerWidth ? window.innerWidth/2 : window.innerHeight/2
+        var lg = document.querySelector("#footInformation div")
 
-        canvas.width = adjustLength
-        canvas.height = adjustLength
+
+        canvas.width = lg.clientWidth
+        canvas.height = lg.clientHeight
 
         w = canvas.width
         h = canvas.height
@@ -127,7 +125,7 @@
         ctx.restore();
     }
 
-    window.introductionAdjust = start0
+    window.logoAdjust = startl
 
 
 }(window))
