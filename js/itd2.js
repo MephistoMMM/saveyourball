@@ -6,8 +6,6 @@
 
 (function(window){
 
-    var c2 = document.getElementById("item2")
-    console.log(c2)
 
     var x,y,w,h
 

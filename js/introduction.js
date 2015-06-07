@@ -6,37 +6,128 @@
 
 (function(window){
 
-	window.addEventListener("load",start0,false)  
-
-	function start0() {
 
 
-		img = new Image();
-		img.src = "img/mf1.jpg"
-
-
-		var canvas = document.getElementById("canvas");
-		var ctx = canvas.getContext("2d");
-
-		canvas.width = 800;
-		canvas.height = 400;
-
-        ctx.backgroundColor = "#000"
-
-		ctx.strokeStyle = "#FFFFFF";
-		ctx.fillStyle = "#FFFFFF";
+    var speed = 0.05
+    var g = 0.1
+    var w,h
+    var r = 2 * 4
 
 
 
-        img.onload = function() {
-            setInterval(function () {
-                ctx.clearRect(0, 0, 800, 400);
-                ctx.drawImage(img, 80+20*Math.random(), 20*Math.random(), 600, 388)
-            }, 50)
 
+    function start0(){
+
+        var canvas = document.getElementById("canvas")
+        var ctx = canvas.getContext("2d")
+
+        var adjustLength = window.innerHeight > window.innerWidth ? window.innerWidth*2/3 : window.innerHeight*2/3
+
+        canvas.width = adjustLength
+        canvas.height = adjustLength
+
+        w = canvas.width
+        h = canvas.height
+
+        var R = w/3
+
+
+
+        var b1 = new ball(R, 0, r)
+        var b2 = new ball(R, -Math.PI*2/3, r)
+        var b3 = new ball(R, +Math.PI*2/3, r)
+
+        setInterval(function(){
+
+            ctx.fillStyle = "#000"
+            ctx.fillRect(0,0, w, h)
+
+            ctx.save()
+            update(b1)
+            update(b2)
+            update(b3)
+
+            render(b1,"red", ctx)
+            render(b2,"greenyellow",ctx)
+            render(b3,"gold",ctx)
+
+            ctx.restore()
+
+
+        },10)
+    }
+
+
+    function render(ball,c,ctx){
+
+        drawBall(ball.x, ball.y, ball.r, c, ctx)
+
+    }
+
+    function update(ball) {
+
+        if (ball.radius < 3*r) {
+            ball.v = -ball.v*0.97
         }
 
+        ball.radius -= ball.v
+        ball.v += g
+        ball.x = w/2+ball.radius*Math.cos(ball.theta)
+        ball.y = h/2+ball.radius*Math.sin(ball.theta)
+
+        ball.r = ball.radius/20 + 5
+
+        ball.theta += speed
+    }
 
 
-	};
+    function ball(radius, theta, r){
+        this.radius = radius
+        this.theta = theta
+        this.x = w/2+this.radius*Math.cos(this.theta)
+        this.y = h/2+this.radius*Math.sin(this.theta)
+        this.v = 0
+        this.r = r
+    }
+
+
+
+
+    function drawBall(x, y, r, c, ctx){
+
+        var or = r * 4;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.beginPath();                                                           //画核心
+        ctx.arc(0,0,r,0,Math.PI*2,true);
+        ctx.closePath();
+        ctx.fillStyle = c;
+        ctx.fill();
+
+
+        ctx.beginPath();                                                              //画边
+        ctx.strokeStyle = c;
+
+        var dx = Math.sin(0);
+        var dy = Math.cos(0);
+        var dig = Math.PI / 7*11;
+
+        for(var i = 0; i<14 ;i ++){
+
+            dx = Math.sin(i*dig);
+            dy = Math.cos(i*dig);
+
+            ctx.lineTo(dx*or,dy*or);
+        }
+
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    window.introductionAdjust = start0
+
+
 }(window))
