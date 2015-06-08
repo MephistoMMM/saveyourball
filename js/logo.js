@@ -5,8 +5,8 @@
 (function(window){
 
 
-    var speed = 0.05
-    var g = 0.1
+    var speed = 0.03
+    var g = 0
     var w,h
     var r = 2 * 4
 
@@ -21,8 +21,8 @@
         var lg = document.querySelector("#footInformation div")
 
 
-        canvas.width = lg.clientWidth
-        canvas.height = lg.clientHeight
+        canvas.width = lg.clientWidth*0.5
+        canvas.height = canvas.width;
 
         w = canvas.width
         h = canvas.height

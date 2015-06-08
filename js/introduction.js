@@ -8,8 +8,8 @@
 
 
 
-    var speed = 0.05
-    var g = 0.1
+    var speed = 0.03
+    var g = 0
     var w,h
     var r = 2 * 4
 
@@ -18,13 +18,13 @@
 
     function start0(){
 
-        var canvas = document.getElementById("canvas")
+        var canvas = document.getElementById("theme_log")
         var ctx = canvas.getContext("2d")
 
         var adjustLength = window.innerHeight > window.innerWidth ? window.innerWidth/2 : window.innerHeight/2
 
-        canvas.width = adjustLength
-        canvas.height = adjustLength
+        canvas.width = adjustLength*0.5
+        canvas.height = canvas.width;
 
         w = canvas.width
         h = canvas.height

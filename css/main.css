@@ -54,6 +54,7 @@ body{
 
 #headerline > #main{
 
+    text-shadow:3px 0px 6px orange;
     color: gold;
     margin: 0 auto;
     padding: 0;
@@ -61,6 +62,7 @@ body{
 }
 
 #headerline > #aside{
+    text-shadow: 1px 0px 2px gold;
     color: #FFFF99;
     font-size: 0.2em;
     margin: 0 auto;
@@ -68,11 +70,48 @@ body{
 }
 
 
-.plane >canvas{
-    width :500px;
-    margin: 0 auto;
+#theme{
+    display: -webkit-box;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    width:70%;
+}
+
+
+#titleline{
+    font-size: 1.5em;
+    font-style: italic;
+    text-shadow: 1px 0px 2px gold;
+    color:white;
+    -webkit-box-flex:10;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    //border-left: 1px solid gold;
+
+    margin: 0 0 0 5%;
     padding: 0;
 }
+
+#titleline > article{
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+
+
+#theme_log{
+    -webkit-box-flex:10;
+    margin: 0 5%;
+    padding: 0;
+}
+
+
+
 
 
 
@@ -263,13 +302,13 @@ body{
 
     -webkit-box-orient: vertical;
     -webkit-box-pack: center;
-    -webkit-box-align: end;
+    -webkit-box-align: center;
 }
 
 
 
 #footInformation{
-    width:100%;
+    width:90%;
 
     margin:1% 0 ;
     display: -webkit-box;
@@ -280,7 +319,7 @@ body{
 
 .logo_foot{
     margin: 0 0;
-    -webkit-box-flex:3;
+    -webkit-box-flex:2;
 }
 
 
