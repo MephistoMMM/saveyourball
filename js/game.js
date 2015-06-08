@@ -60,6 +60,7 @@
     //安装游戏
     function game_setup(){
 
+        var __game_canvas = document.body.querySelector("#game_canvas");
         __canvas = document.body.querySelector("#game");
         __gamebutton.div = document.body.querySelector("#replay");
         __gamebutton.start = document.body.querySelector("#play");
@@ -69,12 +70,13 @@
         //setup controlor
         __gamebutton.div.addEventListener("mousedown",E_game_control,false);
 
-        __canvas.style.height ="90%";
-        __canvas.style.width ="100%";
+        __canvas.height =__game_canvas.offsetHeight*0.9;
+        __canvas.width =__game_canvas.offsetWidth;
 
         //调整canvas大小
-        __canvas.__osize = SIZERATE*__canvas.offsetHeight;
+        __canvas.__osize = SIZERATE*Math.min(__canvas.offsetHeight,__canvas.offsetWidth);
         __canvas.__isize = __canvas.__osize*INRATE;
+
 
         //设置绘图环境
         __context = __canvas.getContext("2d");
